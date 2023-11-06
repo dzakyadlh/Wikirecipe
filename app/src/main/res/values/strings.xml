@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Wikirecipe</string>
+    <string name="scroll_to_top">Scroll to top</string>
+    <string name="search">Search for a recipe…</string>
 </resources>
