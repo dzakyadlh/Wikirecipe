@@ -4,32 +4,32 @@ object RecipeData {
     val recipes = listOf(
         Recipe(
             "001",
-            "Kentucky Fried Chicken",
+            "Spagetthi",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
             "002",
-            "Kentucky Fried Chicken",
+            "Cream Soup",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
             "003",
-            "Kentucky Fried Chicken",
+            "Salmon Steak",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
             "004",
-            "Kentucky Fried Chicken",
+            "Souffle",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
             "005",
-            "Kentucky Fried Chicken",
+            "Omurice",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
             "006",
-            "Kentucky Fried Chicken",
+            "Coto Makassar",
             "https://firebasestorage.googleapis.com/v0/b/wikirecipe-abc14.appspot.com/o/kentucky_fried_chicken.jpg?alt=media&token=1214ad4f-79d1-4648-ad55-d0d4e197b0ac"
         ),
         Recipe(
