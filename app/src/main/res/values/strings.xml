@@ -3,4 +3,5 @@
     <string name="scroll_to_top">Scroll to top</string>
     <string name="search">Search for a recipe…</string>
     <string name="back">Back</string>
+    <string name="creator">creator</string>
 </resources>
