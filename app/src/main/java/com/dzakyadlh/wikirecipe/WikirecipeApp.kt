@@ -89,7 +89,7 @@ fun TopAppBar(navController: NavHostController, modifier: Modifier = Modifier) {
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    "Wikirecipe",
+                    "About",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

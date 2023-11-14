@@ -33,6 +33,7 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -42,7 +43,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -75,6 +75,7 @@ fun HomeScreen(
                 HomeContent(
                     recipe = uiState.data,
                     modifier = modifier,
+                    viewModel = viewModel,
                     navigateToDetail = navigateToDetail
                 )
             }
@@ -89,6 +90,7 @@ fun HomeScreen(
 fun HomeContent(
     recipe: List<Recipe>,
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel,
     navigateToDetail: (String) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -97,14 +99,15 @@ fun HomeContent(
         val showButton: Boolean by remember {
             derivedStateOf { listState.firstVisibleItemIndex > 0 }
         }
+        val query by viewModel.query
         LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 80.dp)) {
-//            item {
-//                SearchBar(
-//                    query = query,
-//                    onQueryChange = viewModel::search,
-//                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
-//                )
-//            }
+            item {
+                SearchBar(
+                    query = query,
+                    onQueryChange = viewModel::searchRecipes,
+                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+                )
+            }
             items(recipe, key = { it.id }) { data ->
                 RecipeList(
                     id = data.id,
@@ -129,9 +132,11 @@ fun HomeContent(
 
 @Composable
 fun RecipeList(id: String, name: String, photoUrl: String, navigateToDetail: (String) -> Unit) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(all = 8.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 8.dp)
+    ) {
         ElevatedCard(
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 6.dp
@@ -193,39 +198,16 @@ fun ScrollToTopButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    onSearch: (String) -> Unit = {},
-    active: Boolean = false,
-    onActiveChange: (Boolean) -> Unit = {},
-    enabled: Boolean = true,
-    placeholder: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    shape: Shape = MaterialTheme.shapes.large,
-) {
-    SearchBar(
-        query = query,
-        onQueryChange = onQueryChange,
-        onSearch = {},
-        active = false,
-        onActiveChange = {},
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        },
-        placeholder = {
-            Text(stringResource(R.string.search))
-        },
-        shape = MaterialTheme.shapes.large,
-        modifier = modifier
+fun SearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
+
+    TextField(
+        value = query,
+        onValueChange = onQueryChange,
+        label = { Text("Search") },
+        leadingIcon = { Icon(imageVector = Icons.Filled.Search, contentDescription = null) },
+        modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .heightIn(min = 48.dp)
+            .heightIn(min = 48.dp),
     )
 }

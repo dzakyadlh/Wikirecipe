@@ -17,13 +17,6 @@ class HomeViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query
 
-//    fun search(newQuery:String) {
-//        _query.value = newQuery
-//        _sortedRecipes.value = repository.searchRecipes(_query.value)
-//            .sortedBy { it.name }
-//            .groupBy { it.name[0] }
-//    }
-
     private val _uiState: MutableStateFlow<UiState<List<Recipe>>> =
         MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState<List<Recipe>>>
@@ -38,6 +31,14 @@ class HomeViewModel(private val repository: RecipeRepository) : ViewModel() {
                 .collect { recipe ->
                     _uiState.value = UiState.Success(recipe)
                 }
+        }
+    }
+
+    fun searchRecipes(newQuery: String) {
+        _query.value = newQuery
+        viewModelScope.launch {
+            val filteredRecipes = repository.searchRecipes(newQuery)
+            _uiState.value = UiState.Success(filteredRecipes)
         }
     }
 }

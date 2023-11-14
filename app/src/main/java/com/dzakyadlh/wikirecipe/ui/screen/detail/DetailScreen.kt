@@ -90,7 +90,9 @@ fun DetailContent(
                     contentDescription = stringResource(R.string.back),
                     modifier = Modifier
                         .padding(16.dp)
-                        .clickable { onBackClick() })
+                        .clickable { onBackClick() },
+                    tint = MaterialTheme.colorScheme.primaryContainer
+                )
             }
             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.padding(16.dp)) {
                 Row (verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.SpaceBetween) {
