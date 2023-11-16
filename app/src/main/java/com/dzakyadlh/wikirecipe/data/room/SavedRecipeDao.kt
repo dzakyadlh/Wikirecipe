@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.dzakyadlh.wikirecipe.data.entity.SavedRecipe
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SavedRecipeDao {
@@ -16,5 +17,8 @@ interface SavedRecipeDao {
     fun delete(savedRecipe: SavedRecipe)
 
     @Query("SELECT * from savedrecipe ORDER BY name ASC")
-    fun getAllSavedRecipes(): LiveData<List<SavedRecipe>>
+    fun getAllSavedRecipes(): Flow<List<SavedRecipe>>
+
+    @Query("SELECT * FROM savedrecipe WHERE id = :id")
+    fun getSavedRecipe(id: String): LiveData<SavedRecipe?>
 }

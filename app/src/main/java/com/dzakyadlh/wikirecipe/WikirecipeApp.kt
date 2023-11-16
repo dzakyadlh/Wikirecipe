@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,6 +33,7 @@ import com.dzakyadlh.wikirecipe.ui.navigation.Screen
 import com.dzakyadlh.wikirecipe.ui.screen.about.AboutScreen
 import com.dzakyadlh.wikirecipe.ui.screen.detail.DetailScreen
 import com.dzakyadlh.wikirecipe.ui.screen.home.HomeScreen
+import com.dzakyadlh.wikirecipe.ui.screen.savedrecipe.SavedRecipeScreen
 import com.dzakyadlh.wikirecipe.ui.theme.WikirecipeTheme
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -64,6 +66,13 @@ fun WikirecipeApp(
                 val id = it.arguments?.getString("id") ?: -1L
                 DetailScreen(id = id.toString(), navigateBack = { navController.navigateUp() })
             }
+            composable(Screen.SavedRecipe.route) {
+                SavedRecipeScreen(navigateToDetail = { id ->
+                    navController.navigate(
+                        Screen.Detail.createRoute(id)
+                    )
+                })
+            }
             composable(Screen.About.route) {
                 AboutScreen()
             }
@@ -85,28 +94,28 @@ fun TopAppBar(navController: NavHostController, modifier: Modifier = Modifier) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    if (currentRoute == Screen.About.route) {
+    if (currentRoute == Screen.About.route || currentRoute == Screen.SavedRecipe.route) {
         CenterAlignedTopAppBar(
             title = {
-                Text(
-                    "About",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (currentRoute == Screen.About.route) {
+                    Text(
+                        "About",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                } else {
+                    Text(
+                        "Saved Recipes",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             },
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "Back"
-                    )
-                }
-            },
-            actions = {
-                IconButton(onClick = { navController.navigate(Screen.About.route) }) {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "about_page"
                     )
                 }
             },
@@ -123,6 +132,12 @@ fun TopAppBar(navController: NavHostController, modifier: Modifier = Modifier) {
                 )
             },
             actions = {
+                IconButton(onClick = { navController.navigate(Screen.SavedRecipe.route) }) {
+                    Icon(
+                        imageVector = Icons.Filled.List,
+                        contentDescription = "Localized description"
+                    )
+                }
                 IconButton(onClick = { navController.navigate(Screen.About.route) }) {
                     Icon(
                         imageVector = Icons.Filled.Person,
